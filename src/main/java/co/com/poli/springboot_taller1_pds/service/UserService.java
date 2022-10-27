@@ -35,8 +35,10 @@ public class UserService {
         LocalDate currentDate = LocalDate.now();
         LocalDate birthDate = userInDTO.getBirtDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int age = Period.between(birthDate, currentDate).getYears();
+        System.out.println(age);
         if (age < 18) {
             throw new UTRException("Minor user", HttpStatus.BAD_REQUEST);
+
         }
         User user = userInDTOToUser.map(userInDTO);
         return this.userRepository.save(user);

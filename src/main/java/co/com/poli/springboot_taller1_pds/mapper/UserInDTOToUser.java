@@ -9,11 +9,12 @@ public class UserInDTOToUser implements IMapper<UserInDTO, User> {
     @Override
     public User map(UserInDTO in) {
         User user = new User();
-        user.setDependency(in.getDependency());
         user.setBirtDate(in.getBirtDate());
+        user.setActive(Boolean.FALSE);
+        user.setDependency(in.getDependency());
         user.setProfile(in.getPerfil());
         user.setRows(in.getRows());
-        user.setActive(Boolean.FALSE);
+
         return user;
     }
 }
