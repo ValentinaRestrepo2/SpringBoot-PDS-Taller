@@ -18,11 +18,12 @@ import java.util.Objects;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
     @Column(name = "nombre")
     private String nombre;
     @JsonBackReference
-    @OneToOne(mappedBy = "task", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "task")
     private Row row;
 
     @Override

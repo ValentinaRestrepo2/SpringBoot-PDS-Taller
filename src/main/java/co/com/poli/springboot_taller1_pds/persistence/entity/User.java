@@ -33,7 +33,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private List<Profile> profile;
     @JsonManagedReference
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Row> rows;
 
     @Override

@@ -33,6 +33,14 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UserInDTO userInDTO) {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate birthDate = userInDTO.getBirtDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int age = Period.between(birthDate, currentDate).getYears();
+        System.out.println(age);
+        if (age < 18) {
+            throw new UTRException("El usuario es menor de edad", HttpStatus.BAD_REQUEST);
+
+        }
         User user = this.userService.createUser(userInDTO);
         return ResponseEntity.ok(user);
     }

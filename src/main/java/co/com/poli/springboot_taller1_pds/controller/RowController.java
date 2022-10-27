@@ -29,6 +29,7 @@ public class RowController {
 
     @PostMapping
     public ResponseEntity<?> createRow(@RequestBody Row row) {
+        System.out.println(row);
         int duration = row.getDuration();
         if(duration < 1 || duration > 60){
             throw  new UTRException("The duration should be in the range of 1-60", HttpStatus.BAD_REQUEST);
