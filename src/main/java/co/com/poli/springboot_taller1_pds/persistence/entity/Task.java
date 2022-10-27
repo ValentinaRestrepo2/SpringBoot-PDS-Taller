@@ -1,4 +1,4 @@
-package co.com.poli.taller_3_santiago_cano.persistence.entity;
+package co.com.poli.springboot_taller1_pds.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
@@ -14,23 +14,23 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "tareas")
-public class Tarea {
+@Table(name = "tasks")
+public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
+    @Column(name = "nombre")
     private String nombre;
     @JsonBackReference
-    @OneToOne(mappedBy = "tarea", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private Fila fila;
+    @OneToOne(mappedBy = "task", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Row row;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Tarea tarea = (Tarea) o;
-        return id.equals(tarea.id);
+        Task task = (Task) o;
+        return id.equals(task.id);
     }
 
     @Override

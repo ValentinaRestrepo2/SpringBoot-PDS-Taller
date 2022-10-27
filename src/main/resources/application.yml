@@ -4,6 +4,6 @@ server:
   port: 9080
 spring:
   application:
-    name: task-app
+    name: taller-app
   profiles:
-    active: prod
+    active: dev

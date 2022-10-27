@@ -1,5 +1,5 @@
-package co.com.poli.taller_3_santiago_cano.persistence.entity;
+package co.com.poli.springboot_taller1_pds.persistence.entity;
 
-public enum Dependencia {
+public enum Dependency {
     CONSULTORIA, FABRICA, DESARROLLO
 }

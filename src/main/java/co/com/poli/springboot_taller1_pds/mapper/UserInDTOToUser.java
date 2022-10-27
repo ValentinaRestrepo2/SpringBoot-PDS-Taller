@@ -1,19 +1,19 @@
-package co.com.poli.taller_3_santiago_cano.mapper;
+package co.com.poli.springboot_taller1_pds.mapper;
 
-import co.com.poli.taller_3_santiago_cano.persistence.entity.Usuario;
-import co.com.poli.taller_3_santiago_cano.service.DTO.UsuarioInDTO;
+import co.com.poli.springboot_taller1_pds.persistence.entity.User;
+import co.com.poli.springboot_taller1_pds.service.dto.UserInDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UsuarioInDTOToUsuario implements IMapper<UsuarioInDTO, Usuario> {
+public class UserInDTOToUser implements IMapper<UserInDTO, User> {
     @Override
-    public Usuario map(UsuarioInDTO in) {
-        Usuario usuario = new Usuario();
-        usuario.setDependencia(in.getDependencia());
-        usuario.setFechaNacimineto(in.getFechaNacimineto());
-        usuario.setPerfil(in.getPerfil());
-        usuario.setFilas(in.getFilas());
-        usuario.setActivo(Boolean.FALSE);
-        return usuario;
+    public User map(UserInDTO in) {
+        User user = new User();
+        user.setDependency(in.getDependency());
+        user.setBirtDate(in.getBirtDate());
+        user.setProfile(in.getPerfil());
+        user.setRows(in.getRows());
+        user.setActive(Boolean.FALSE);
+        return user;
     }
 }

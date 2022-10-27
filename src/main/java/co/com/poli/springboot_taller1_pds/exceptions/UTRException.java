@@ -1,14 +1,14 @@
-package co.com.poli.taller_3_santiago_cano.exceptions;
+package co.com.poli.springboot_taller1_pds.exceptions;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 @Data
-public class UsuarioException extends RuntimeException {
+public class UTRException extends RuntimeException {
     private String message;
     private HttpStatus httpStatus;
 
-    public UsuarioException(String message, HttpStatus httpStatus) {
+    public UTRException(String message, HttpStatus httpStatus) {
         super(message);
         this.message = message;
         this.httpStatus = httpStatus;

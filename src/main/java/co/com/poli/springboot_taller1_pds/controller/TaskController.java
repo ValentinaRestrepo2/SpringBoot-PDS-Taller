@@ -1,8 +1,8 @@
-package co.com.poli.taller_3_santiago_cano.controller;
+package co.com.poli.springboot_taller1_pds.controller;
 
-import co.com.poli.taller_3_santiago_cano.exceptions.UsuarioException;
-import co.com.poli.taller_3_santiago_cano.persistence.entity.Tarea;
-import co.com.poli.taller_3_santiago_cano.service.TareaService;
+import co.com.poli.springboot_taller1_pds.exceptions.UTRException;
+import co.com.poli.springboot_taller1_pds.persistence.entity.Task;
+import co.com.poli.springboot_taller1_pds.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,43 +11,43 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 
-@RequestMapping("/tarea")
+@RequestMapping("/task")
 @RequiredArgsConstructor
 @RestController
-public class TareaController {
-    private final TareaService tareaService;
+public class TaskController {
+    private final TaskService taskService;
 
     @GetMapping
-    public List<Tarea> findAll() {
-        return this.tareaService.findAll();
+    public List<Task> findAll() {
+        return this.taskService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Tarea findById(@PathVariable("id") Integer id) {
-        return this.tareaService.findById(id);
+    public Task findById(@PathVariable("id") Integer id) {
+        return this.taskService.findById(id);
     }
 
     @PostMapping
-    public ResponseEntity<?> createTarea(@RequestBody Tarea tarea) {
-        Tarea tarea1 = this.tareaService.createTarea(tarea);
-        return ResponseEntity.ok(tarea1);
+    public ResponseEntity<?> createTask(@RequestBody Task task) {
+        Task task1 = this.taskService.createTask(task);
+        return ResponseEntity.ok(task1);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTarea(@PathVariable("id") Integer id, @RequestBody Tarea tarea) {
-        Tarea tarea1 = this.tareaService.updateTarea(tarea, id);
+    public ResponseEntity<?> updateTask(@PathVariable("id") Integer id, @RequestBody Task task) {
+        Task task1 = this.taskService.updateTask(task, id);
 
-        if (Objects.isNull(tarea1)) {
-            throw new UsuarioException("No se encontró la tarea", HttpStatus.NOT_FOUND);
+        if (Objects.isNull(task1)) {
+            throw new UTRException("Task not found", HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(tarea1);
+        return ResponseEntity.ok(task1);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTarea(@PathVariable("id") Integer id) {
-        Tarea tarea = this.tareaService.deleteTarea(id);
-        if (Objects.isNull(tarea)) {
-            throw new UsuarioException("No se encontró la tarea", HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> deleteTask(@PathVariable("id") Integer id) {
+        Task task = this.taskService.deleteTask(id);
+        if (Objects.isNull(task)) {
+            throw new UTRException("Task not found", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.noContent().build();
     }

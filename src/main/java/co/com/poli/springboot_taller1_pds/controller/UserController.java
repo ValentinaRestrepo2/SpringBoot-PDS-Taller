@@ -1,9 +1,9 @@
-package co.com.poli.taller_3_santiago_cano.controller;
+package co.com.poli.springboot_taller1_pds.controller;
 
-import co.com.poli.taller_3_santiago_cano.exceptions.UsuarioException;
-import co.com.poli.taller_3_santiago_cano.persistence.entity.Usuario;
-import co.com.poli.taller_3_santiago_cano.service.DTO.UsuarioInDTO;
-import co.com.poli.taller_3_santiago_cano.service.UsuarioService;
+import co.com.poli.springboot_taller1_pds.exceptions.UTRException;
+import co.com.poli.springboot_taller1_pds.persistence.entity.User;
+import co.com.poli.springboot_taller1_pds.service.UserService;
+import co.com.poli.springboot_taller1_pds.service.dto.UserInDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,54 +16,48 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/user")
 @AllArgsConstructor
-public class UsuarioController {
-    private final UsuarioService usuarioService;
+public class UserController {
+    private final UserService userService;
 
     @GetMapping
-    public List<Usuario> findAll() {
-        return this.usuarioService.findAll();
+    public List<User> findAll() {
+        return this.userService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Usuario findByID(@PathVariable("id") Integer id) {
-        return this.usuarioService.findById(id);
+    public User findByID(@PathVariable("id") Integer id) {
+        return this.userService.findById(id);
     }
 
     @PostMapping
-    public ResponseEntity<?> createUsuario(@RequestBody UsuarioInDTO usuarioInDTO) {
-        LocalDate currentDate = LocalDate.now();
-        LocalDate birthDate = usuarioInDTO.getFechaNacimineto().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        int age = Period.between(birthDate, currentDate).getYears();
-        if (age < 18) {
-            throw new UsuarioException("El usuario es menor de edad", HttpStatus.BAD_REQUEST);
-        }
-        Usuario usuario = this.usuarioService.createUsuario(usuarioInDTO);
-        return ResponseEntity.ok(usuario);
+    public ResponseEntity<?> createUser(@RequestBody UserInDTO userInDTO) {
+        User user = this.userService.createUser(userInDTO);
+        return ResponseEntity.ok(user);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUsuario(@PathVariable("id") Integer id, @RequestBody Usuario usuario) {
+    public ResponseEntity<?> updateUser(@PathVariable("id") Integer id, @RequestBody User user) {
         LocalDate currentDate = LocalDate.now();
-        LocalDate birthDate = usuario.getFechaNacimineto().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate birthDate = user.getBirtDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int age = Period.between(birthDate, currentDate).getYears();
         if (age < 18) {
-            throw new UsuarioException("El usuario es menor de edad", HttpStatus.BAD_REQUEST);
+            throw new UTRException("Minor user", HttpStatus.BAD_REQUEST);
         }
-        Usuario usuario1 = this.usuarioService.updateUsuario(usuario, id);
+        User user1 = this.userService.updateUser(user, id);
 
-        if (Objects.isNull(usuario1)) {
-            throw new UsuarioException("No se encontró el usuario", HttpStatus.NOT_FOUND);
+        if (Objects.isNull(user1)) {
+            throw new UTRException("User not found", HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(usuario1);
+        return ResponseEntity.ok(user1);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUsuario(@PathVariable("id") Integer id) {
-        Usuario usuario = this.usuarioService.deleteUsuario(id);
-        if (Objects.isNull(usuario)) {
-            throw new UsuarioException("No se encontró el usuario", HttpStatus.NOT_FOUND);
+        User user = this.userService.deleteUser(id);
+        if (Objects.isNull(user)) {
+            throw new UTRException("User not found", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.noContent().build();
     }

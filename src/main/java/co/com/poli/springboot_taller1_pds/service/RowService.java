@@ -1,8 +1,7 @@
-package co.com.poli.taller_3_santiago_cano.service;
+package co.com.poli.springboot_taller1_pds.service;
 
-import co.com.poli.taller_3_santiago_cano.persistence.entity.Fila;
-import co.com.poli.taller_3_santiago_cano.persistence.entity.Tarea;
-import co.com.poli.taller_3_santiago_cano.persistence.repository.FilaRepository;
+import co.com.poli.springboot_taller1_pds.persistence.entity.Row;
+import co.com.poli.springboot_taller1_pds.persistence.repository.RowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,39 +11,39 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class FilaService {
-    private final FilaRepository filaRepository;
+public class RowService {
+    private final RowRepository rowRepository;
 
-    public List<Fila> findAll(){
-        return this.filaRepository.findAll();
+    public List<Row> findAll(){
+        return this.rowRepository.findAll();
     }
 
-    public Fila findById(Integer id){
-        Optional<Fila> fila = this.filaRepository.findById(id);
-        return fila.orElse(null);
+    public Row findById(Integer id){
+        Optional<Row> row = this.rowRepository.findById(id);
+        return row.orElse(null);
     }
 
-    public Fila createFila(Fila fila){
-        return this.filaRepository.save(fila);
-    }
-
-    @Transactional
-    public Fila updateFila(Fila fila, Integer id){
-        Fila fila1 = findById(id);
-        if(fila1 != null){
-            fila1.setDuracion(fila.getDuracion());
-            fila1.setTarea(fila.getTarea());
-            this.filaRepository.save(fila1);
-        }
-        return fila1;
+    public Row createRow(Row row){
+        return this.rowRepository.save(row);
     }
 
     @Transactional
-    public Fila deleteFila(Integer id){
-        Fila fila = findById(id);
-        if(fila != null){
-            this.filaRepository.delete(fila);
+    public Row updateRow(Row row, Integer id){
+        Row row1 = findById(id);
+        if(row1 != null){
+            row1.setDuration(row.getDuration());
+            row1.setTask(row.getTask());
+            this.rowRepository.save(row1);
         }
-        return fila;
+        return row1;
+    }
+
+    @Transactional
+    public Row deleteRow(Integer id){
+        Row row = findById(id);
+        if(row != null){
+            this.rowRepository.delete(row);
+        }
+        return row;
     }
 }

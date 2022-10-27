@@ -1,18 +1,18 @@
-package co.com.poli.taller_3_santiago_cano.service.DTO;
+package co.com.poli.springboot_taller1_pds.service.dto;
 
-import co.com.poli.taller_3_santiago_cano.persistence.entity.Dependencia;
-import co.com.poli.taller_3_santiago_cano.persistence.entity.Fila;
-import co.com.poli.taller_3_santiago_cano.persistence.entity.Perfil;
+import co.com.poli.springboot_taller1_pds.persistence.entity.Dependency;
+import co.com.poli.springboot_taller1_pds.persistence.entity.Profile;
+import co.com.poli.springboot_taller1_pds.persistence.entity.Row;
 import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class UsuarioInDTO {
+public class UserInDTO {
     private Integer id;
-    private Date fechaNacimineto;
-    private Dependencia dependencia;
-    private List<Perfil> perfil;
-    private List<Fila> filas;
+    private Date birtDate;
+    private Dependency dependency;
+    private List<Profile> perfil;
+    private List<Row> rows;
 }

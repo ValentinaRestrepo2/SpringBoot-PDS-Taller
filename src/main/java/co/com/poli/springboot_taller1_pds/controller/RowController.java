@@ -1,9 +1,8 @@
-package co.com.poli.taller_3_santiago_cano.controller;
+package co.com.poli.springboot_taller1_pds.controller;
 
-import co.com.poli.taller_3_santiago_cano.exceptions.FilaException;
-import co.com.poli.taller_3_santiago_cano.exceptions.UsuarioException;
-import co.com.poli.taller_3_santiago_cano.persistence.entity.Fila;
-import co.com.poli.taller_3_santiago_cano.service.FilaService;
+import co.com.poli.springboot_taller1_pds.exceptions.UTRException;
+import co.com.poli.springboot_taller1_pds.persistence.entity.Row;
+import co.com.poli.springboot_taller1_pds.service.RowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,49 +13,48 @@ import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/fila")
-public class FilaController {
-    private final FilaService filaService;
+@RequestMapping("/row")
+public class RowController {
+    private final RowService rowService;
 
     @GetMapping
-    public List<Fila> findAll() {
-        return filaService.findAll();
+    public List<Row> findAll() {
+        return rowService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Fila findById(@PathVariable("id") Integer id) {
-        return filaService.findById(id);
+    public Row findById(@PathVariable("id") Integer id) {
+        return rowService.findById(id);
     }
 
     @PostMapping
-    public ResponseEntity<?> createFila(@RequestBody Fila fila) {
-        System.out.println(fila);
-        int duracion = fila.getDuracion();
-        if(duracion < 1 || duracion > 60){
-            throw  new FilaException("La duracion debe estar en un rango de 1 y 60", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> createRow(@RequestBody Row row) {
+        int duration = row.getDuration();
+        if(duration < 1 || duration > 60){
+            throw  new UTRException("The duration should be in the range of 1-60", HttpStatus.BAD_REQUEST);
         }
-        Fila fila1 = filaService.createFila(fila);
-        return ResponseEntity.ok(fila1);
+        Row row1 = rowService.createRow(row);
+        return ResponseEntity.ok(row1);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateFila(@PathVariable("id") Integer id, @RequestBody Fila fila) {
-        int duracion = fila.getDuracion();
-        if(duracion < 1 || duracion > 60){
-            throw  new FilaException("La duracion debe estar en un rango de 1 y 60", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> updateFila(@PathVariable("id") Integer id, @RequestBody Row row) {
+        int duration = row.getDuration();
+        if(duration < 1 || duration > 60){
+            throw  new UTRException("The duration should be in the range of 1-60", HttpStatus.BAD_REQUEST);
         }
-        Fila fila1 = this.filaService.updateFila(fila, id);
-        if (Objects.isNull(fila1)) {
-            throw new FilaException("No se encontró la fila", HttpStatus.NOT_FOUND);
+        Row row1 = this.rowService.updateRow(row, id);
+        if (Objects.isNull(row1)) {
+            throw new UTRException("Row not found", HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(fila1);
+        return ResponseEntity.ok(row1);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFila(@PathVariable("id") Integer id) {
-        Fila fila = this.filaService.deleteFila(id);
-        if (Objects.isNull(fila)) {
-            throw new FilaException("No se encontró la fila", HttpStatus.NOT_FOUND);
+        Row row = this.rowService.deleteRow(id);
+        if (Objects.isNull(row)) {
+            throw new UTRException("Row not found", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.noContent().build();
     }

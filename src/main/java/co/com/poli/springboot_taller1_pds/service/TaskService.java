@@ -1,48 +1,48 @@
-package co.com.poli.taller_3_santiago_cano.service;
-import co.com.poli.taller_3_santiago_cano.persistence.entity.Tarea;
-import co.com.poli.taller_3_santiago_cano.persistence.repository.TareaRepository;
+package co.com.poli.springboot_taller1_pds.service;
+
+import co.com.poli.springboot_taller1_pds.persistence.entity.Task;
+import co.com.poli.springboot_taller1_pds.persistence.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class TareaService {
-    private final TareaRepository tareaRepository;
+public class TaskService {
+    private final TaskRepository taskRepository;
 
-    public List<Tarea> findAll(){
-        return this.tareaRepository.findAll();
+    public List<Task> findAll(){
+        return this.taskRepository.findAll();
     }
 
-    public Tarea findById(Integer id){
-        Optional<Tarea> tarea = this.tareaRepository.findById(id);
-        return tarea.orElse(null);
+    public Task findById(Integer id){
+        Optional<Task> task = this.taskRepository.findById(id);
+        return task.orElse(null);
     }
 
-    public Tarea createTarea(Tarea tarea){
-        return this.tareaRepository.save(tarea);
-    }
-
-    @Transactional
-    public Tarea updateTarea(Tarea tarea, Integer id){
-        Tarea tarea1 = findById(id);
-        if(tarea1 != null){
-            tarea1.setNombre(tarea.getNombre());
-            this.tareaRepository.save(tarea1);
-        }
-        return tarea1;
+    public Task createTask(Task task){
+        return this.taskRepository.save(task);
     }
 
     @Transactional
-    public Tarea deleteTarea(Integer id){
-        Tarea tarea = findById(id);
-        if(tarea != null){
-            this.tareaRepository.delete(tarea);
+    public Task updateTask(Task task, Integer id){
+        Task task1 = findById(id);
+        if(task1 != null){
+            task1.setNombre(task.getNombre());
+            this.taskRepository.save(task1);
         }
-        return tarea;
+        return task1;
+    }
+
+    @Transactional
+    public Task deleteTask(Integer id){
+        Task task = findById(id);
+        if(task != null){
+            this.taskRepository.delete(task);
+        }
+        return task;
     }
 }
